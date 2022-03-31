@@ -5,27 +5,15 @@ import random
 
 app = flask.Flask(__name__)
 
+Base_url = "https://api.themoviedb.org/3/movie/"
 
-bp = flask.Blueprint(
-    "bp",
-    __name__,
-    template_folder="./static/react",
-)
+parfait = {"api_key": os.getenv("key")}
 
-
-@bp.route("/saved_review", method="POST")
-def save_review():
-    data = flask.request.get_json(data=True)
+response = requests.get(url=url, params=params)
+data = response.json()
 
 
-app.register_blueprint(bp)
+@app.route("/")
+def index():
+    return flask.render_template("index.html")
 
-
-@app.route("/review")
-def review():
-    Utilizer_search = flask.request.get_json()
-    review_list = rating.query.filter_by(user=name.first())
-    return flask.jsonify({"review": review_list})
-
-
-app.run()
